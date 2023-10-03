@@ -1,45 +1,25 @@
 import { React } from 'react';
 import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
+import { nanoid } from 'nanoid';
+import { addContacts, contactsSlice } from 'redux/store';
 
-export function ContactForm({ onContacts }) {
+export function ContactForm() {
   const dispatch = useDispatch();
-
-  const name = useSelector(state => state.contactsName);
-  const number = useSelector(state => state.contactsNumder);
-
-  // const [name, setName] = useState('');
-  // const [number, setNumber] = useState('');
-
-  const handleForm = e => {
-    const name = e.target.name;
-
-    switch (name) {
-      case 'name':
-        dispatch({ type: 'addName', payload: e.target.value });
-        // setName(e.target.value);
-        break;
-
-      case 'number':
-        dispatch({ type: 'addNumber', payload: e.target.value });
-        // setNumber(e.target.value);
-        break;
-
-      default:
-        return;
-    }
-  };
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    onContacts({ name, number });
+    const name = e.currentTarget.elements.name.value
+    const number = e.currentTarget.elements.number.value
+ 
+    dispatch({ type: 'addContacts', payload: { name, number, id: nanoid() } })
 
+        // dispatch(addContacts({ name, number, id: nanoid() }))
+    
     const form = e.currentTarget;
     form.reset();
-    // setName('');
-    // setNumber('');
   };
 
   return (
@@ -52,12 +32,11 @@ export function ContactForm({ onContacts }) {
             type="text"
             name="name"
             id="name"
-            // value={name}
+            //  value={name}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
-            onChange={handleForm}
-          />
+        />
         </label>
 
         <label htmlFor="tel" className={css.label}>
@@ -67,12 +46,11 @@ export function ContactForm({ onContacts }) {
             type="tel"
             name="number"
             id="tel"
-            // value={number}
+            //  value={number}
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            onChange={handleForm}
-          />
+        />
         </label>
         <button className={css.btn} type="submite">
           Add contact

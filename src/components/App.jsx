@@ -1,25 +1,26 @@
 import { React, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { nanoid } from 'nanoid';
 
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
+
+ import { deleteContacts, filterContacts } from 'redux/store';
 
 const LOCAL_KEY = 'contacts';
 
 export function App() {
   const dispatch = useDispatch();
 
-  let contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
 
   // const [contacts, setContacts] = useState(() => {
   //  return  JSON.parse(localStorage.getItem(LOCAL_KEY)) ??
   //     ''
   // });
 
-  const filter = useSelector(state => state.filter);
-
+   
   useEffect(() => {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(contacts));
   }, [contacts]);
@@ -30,21 +31,19 @@ export function App() {
       alert(`${user.name} is already in contacts.`);
       return;
     }
-    dispatch({ type: 'addContacts', payload: { ...user, id: nanoid() } });
-    // setContacts(prev => [...prev, { ...user, id: nanoid() }]);
   };
 
   const handleFilter = e => {
-    dispatch({ type: 'filterContacts', payload: e.target.value });
+    // dispatch({ type: 'filterContacts', payload: e.target.value });
+    dispatch(filterContacts( e.target.value));
+     
   };
 
   const deleteContact = id => {
-    contacts = contacts.filter(contact => contact.id !== id);
-    dispatch({ type: 'addContacts', payload: contacts });
-
-    // setContacts(contacts.filter(el => el.id !== id));
+    // dispatch({ type: 'deleteContacts', payload: id }); 
+      dispatch(deleteContacts(id)); 
   };
-  console.log(contacts);
+  
   const filterContact = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
