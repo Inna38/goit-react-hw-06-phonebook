@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
+import {  deleteContactsAction, filterContactsAction } from 'redux/contactsSlice';
 
- import { deleteContacts, filterContacts } from 'redux/store';
-
+ 
 const LOCAL_KEY = 'contacts';
 
 export function App() {
@@ -35,13 +35,13 @@ export function App() {
 
   const handleFilter = e => {
     // dispatch({ type: 'filterContacts', payload: e.target.value });
-    dispatch(filterContacts( e.target.value));
+    dispatch(filterContactsAction( e.target.value));
      
   };
 
   const deleteContact = id => {
     // dispatch({ type: 'deleteContacts', payload: id }); 
-      dispatch(deleteContacts(id)); 
+      dispatch(deleteContactsAction(id)); 
   };
   
   const filterContact = contacts.filter(contact =>

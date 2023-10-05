@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
 import { useDispatch} from 'react-redux';
 import { nanoid } from 'nanoid';
-import { addContacts, contactsSlice } from 'redux/store';
+import { addContactsAction } from 'redux/contactsSlice';
+
 
 export function ContactForm() {
   const dispatch = useDispatch();
@@ -14,9 +15,10 @@ export function ContactForm() {
     const name = e.currentTarget.elements.name.value
     const number = e.currentTarget.elements.number.value
  
-    dispatch({ type: 'addContacts', payload: { name, number, id: nanoid() } })
+    // dispatch({ type: 'addContacts', payload: { name, number, id: nanoid() } })
+    const contacts = { name, number, id: nanoid() }
 
-        // dispatch(addContacts({ name, number, id: nanoid() }))
+    dispatch(addContactsAction(contacts))
     
     const form = e.currentTarget;
     form.reset();
