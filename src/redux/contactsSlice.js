@@ -22,7 +22,7 @@ const contactsSlice = createSlice({
 },
 });
 
-export const { addContactsAction, deleteContactsAction, filterContactsAction } =
+export const { addContactsAction, deleteContactsAction } =
   contactsSlice.actions;
 
 export const contactsReducer = contactsSlice.reducer;

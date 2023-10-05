@@ -4,10 +4,12 @@ import { persistStore, persistReducer } from 'redux-persist'
 
 
 import { contactsReducer } from './contactsSlice';
-
-import { initialState } from './initialState';
 import { filterReducer } from './filterSlice';
 
+const initialState = {
+    contacts: [],
+    filter: '',
+}
 
 export const store = configureStore({
   preloadedState: initialState,

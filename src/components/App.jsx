@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
-import {  deleteContactsAction, filterContactsAction } from 'redux/contactsSlice';
+import {  deleteContactsAction } from 'redux/contactsSlice';
+import { filterContactsAction } from 'redux/filterSlice';
 
  
 const LOCAL_KEY = 'contacts';
