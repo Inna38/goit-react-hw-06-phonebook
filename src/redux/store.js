@@ -1,32 +1,32 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { persistStore, persistReducer } from 'redux-persist'
-
+import {
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 
 import { contactsReducer } from './contactsSlice';
 import { filterReducer } from './filterSlice';
 
-const initialState = {
-    contacts: [],
-    filter: '',
-}
-
 export const store = configureStore({
-  preloadedState: initialState,
   reducer: {
     contacts: contactsReducer,
     filter: filterReducer,
-  } 
-})
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
 
-
-
-// const persistConfig = {
-//   key: 'root',
-//   storage,
-// }
-
-
+export const persistor = persistStore(store);
 
 // --------------------------------------------
 // import { createStore } from 'redux';
@@ -35,16 +35,15 @@ export const store = configureStore({
 //   switch (actions.type) {
 
 //     case 'addContacts':
-     
+
 //       return { ...state, contacts: [...state.contacts, { ...actions.payload }] };
 
 //     case 'deleteContacts':
-      
+
 //       return {...state, contacts: state.contacts.filter(contact => contact.id !== actions.payload)}
-      
 
 //     case 'filterContacts':
-    
+
 //       return { ...state, filter: actions.payload };
 
 //     default:
@@ -56,5 +55,3 @@ export const store = configureStore({
 //   contacts: [],
 //   filter: '',
 // });
-
-
