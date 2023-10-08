@@ -1,9 +1,10 @@
 import { React } from 'react';
-import PropTypes from 'prop-types';
-import css from './ContactForm.module.css';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { addContactsAction } from 'redux/contactsSlice';
+
+import css from './ContactForm.module.css';
 
 export function ContactForm() {
   const dispatch = useDispatch();
@@ -21,8 +22,6 @@ export function ContactForm() {
       alert(`${name} is already in contacts.`);
       return;
     }
-
-    // dispatch({ type: 'addContacts', payload: { name, number, id: nanoid() } })
 
     dispatch(addContactsAction({ name, number, id: nanoid() }));
 
@@ -68,6 +67,3 @@ export function ContactForm() {
   );
 }
 
-ContactForm.propTypes = {
-  handleSubmit: PropTypes.func,
-};
